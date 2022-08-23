@@ -26,7 +26,10 @@ def invalidate_previous_tokens(sender, instance, created, **kwargs):
                 .exclude(id=instance.id).delete()
             return
         CallbackToken.objects.active()\
-            .filter(user=instance.user, type=instance.type, to_alias_type=instance.to_alias_type)\
+            .filter(user=instance.user,
+                    type=instance.type,
+                    to_alias=instance.to_alias,
+                    to_alias_type=instance.to_alias_type)\
             .exclude(id=instance.id).update(is_active=False)
 
 
